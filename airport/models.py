@@ -12,10 +12,15 @@ from django.utils.translation import gettext as _
 def create_custom_image_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
 
+    if hasattr(instance, "name"):
+        new_name = instance.name
+    else:
+        new_name = instance.full_name
+
     return os.path.join(
         "uploads",
         f"{instance.__class__.__name__.lower()}s",
-        f"{slugify(instance.title)}-{uuid.uuid4()}{extension}"
+        f"{slugify(new_name)}-{uuid.uuid4()}{extension}"
     )
 
 
