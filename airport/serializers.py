@@ -32,12 +32,22 @@ class AirplaneSerializer(serializers.ModelSerializer):
         )
 
 
-class AirplaneListSerializer(AirplaneSerializer):
+class AirplaneListSerializer(serializers.ModelSerializer):
     airplane_type = serializers.SlugRelatedField(
         many=False,
         read_only=True,
         slug_field="name",
     )
+
+    class Meta:
+        model = Airplane
+        fields = (
+            "id",
+            "name",
+            "capacity",
+            "airplane_type",
+            "image",
+        )
 
 
 class AirplaneDetailSerializer(serializers.ModelSerializer):
@@ -56,7 +66,14 @@ class AirplaneDetailSerializer(serializers.ModelSerializer):
             "rows",
             "seats_in_row",
             "airplane_type",
+            "image",
         )
+
+
+class AirplaneImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airplane
+        fields = ("id", "image")
 
 
 class CrewSerializer(serializers.ModelSerializer):
@@ -68,6 +85,36 @@ class CrewSerializer(serializers.ModelSerializer):
             "last_name",
             "position",
         )
+
+
+class CrewListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Crew
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "position",
+            "image",
+        )
+
+
+class CrewDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Crew
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "position",
+            "image",
+        )
+
+
+class CrewImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Crew
+        fields = ("id", "image")
 
 
 class AirportSerializer(serializers.ModelSerializer):
@@ -93,7 +140,29 @@ class AirportListSerializer(serializers.ModelSerializer):
             "city",
             "country",
             "iata_code",
+            "image",
         )
+
+
+class AirportDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airport
+        fields = (
+            "id",
+            "name",
+            "city",
+            "country",
+            "iata_code",
+            "latitude",
+            "longitude",
+            "image",
+        )
+
+
+class AirportImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airport
+        fields = ("id", "image")
 
 
 class RouteSerializer(serializers.ModelSerializer):
