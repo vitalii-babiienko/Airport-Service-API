@@ -1,7 +1,6 @@
 from django.db.models import F, Count
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
@@ -69,7 +68,6 @@ class UploadImageMixin:
 class AirplaneTypeViewSet(viewsets.ModelViewSet):
     queryset = AirplaneType.objects.all()
     serializer_class = AirplaneTypeSerializer
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
@@ -77,7 +75,6 @@ class AirplaneViewSet(UploadImageMixin, viewsets.ModelViewSet):
     queryset = Airplane.objects.select_related("airplane_type")
     serializer_class = AirplaneSerializer
     pagination_class = AirplanePagination
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("airplane_type",)
@@ -99,7 +96,6 @@ class CrewViewSet(UploadImageMixin, viewsets.ModelViewSet):
     queryset = Crew.objects.all()
     serializer_class = CrewSerializer
     pagination_class = CrewPagination
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("position",)
@@ -121,7 +117,6 @@ class AirportViewSet(UploadImageMixin, viewsets.ModelViewSet):
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
     pagination_class = AirportPagination
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("city", "country")
@@ -143,7 +138,6 @@ class RouteViewSet(viewsets.ModelViewSet):
     queryset = Route.objects.select_related("source", "destination")
     serializer_class = RouteSerializer
     pagination_class = RoutePagination
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("source", "destination")
@@ -176,7 +170,6 @@ class FlightViewSet(viewsets.ModelViewSet):
     )
     serializer_class = FlightSerializer
     pagination_class = FlightPagination
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("route", "departure_time", "arrival_time")
@@ -199,7 +192,6 @@ class OrderViewSet(viewsets.ModelViewSet):
     )
     serializer_class = OrderSerializer
     pagination_class = OrderPagination
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("created_at",)
