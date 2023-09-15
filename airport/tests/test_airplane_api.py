@@ -112,7 +112,7 @@ class AuthenticatedAirplaneApiTests(TestCase):
             "name": "Airplane",
             "rows": 10,
             "seats_in_row": 5,
-            "airplane_type": airplane_type,
+            "airplane_type": airplane_type.id,
         }
         res = self.client.post(AIRPLANE_URL, payload)
 
