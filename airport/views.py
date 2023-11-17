@@ -1,5 +1,6 @@
 from django.db.models import F, Count
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -65,12 +66,14 @@ class UploadImageMixin:
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@extend_schema(tags=["AirplaneTypes"])
 class AirplaneTypeViewSet(viewsets.ModelViewSet):
     queryset = AirplaneType.objects.all()
     serializer_class = AirplaneTypeSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
+@extend_schema(tags=["Airplanes"])
 class AirplaneViewSet(UploadImageMixin, viewsets.ModelViewSet):
     queryset = Airplane.objects.select_related("airplane_type")
     serializer_class = AirplaneSerializer
@@ -92,6 +95,7 @@ class AirplaneViewSet(UploadImageMixin, viewsets.ModelViewSet):
         return AirplaneSerializer
 
 
+@extend_schema(tags=["Crews"])
 class CrewViewSet(UploadImageMixin, viewsets.ModelViewSet):
     queryset = Crew.objects.all()
     serializer_class = CrewSerializer
@@ -113,6 +117,7 @@ class CrewViewSet(UploadImageMixin, viewsets.ModelViewSet):
         return CrewSerializer
 
 
+@extend_schema(tags=["Airports"])
 class AirportViewSet(UploadImageMixin, viewsets.ModelViewSet):
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
@@ -134,6 +139,7 @@ class AirportViewSet(UploadImageMixin, viewsets.ModelViewSet):
         return AirportSerializer
 
 
+@extend_schema(tags=["Routes"])
 class RouteViewSet(viewsets.ModelViewSet):
     queryset = Route.objects.select_related("source", "destination")
     serializer_class = RouteSerializer
@@ -152,6 +158,7 @@ class RouteViewSet(viewsets.ModelViewSet):
         return RouteSerializer
 
 
+@extend_schema(tags=["Flights"])
 class FlightViewSet(viewsets.ModelViewSet):
     queryset = (
         Flight.objects
@@ -184,6 +191,7 @@ class FlightViewSet(viewsets.ModelViewSet):
         return FlightSerializer
 
 
+@extend_schema(tags=["Orders"])
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.prefetch_related(
         "tickets__flight__airplane",
