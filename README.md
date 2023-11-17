@@ -4,7 +4,7 @@ The RESTful API is designed to manage flight-related information and operations.
 
 ## Run without Docker
 
-Python3 must already be installed!
+**Python3 must already be installed!**
 
 ```shell
 git clone https://github.com/vitalii-babiienko/airport-service-api.git
@@ -22,12 +22,17 @@ python manage.py runserver
 
 ## Run with Docker
 
-Docker must already be installed!
+**Docker must already be installed!**
 
 ```shell
 git clone https://github.com/vitalii-babiienko/airport-service-api.git
 cd airport-service-api
-docker-compose up
+```
+
+Create a **.env** file by copying the **.env.sample** file and populate it with the required values.
+
+```shell
+docker-compose up --build
 ```
 
 ## Get access
